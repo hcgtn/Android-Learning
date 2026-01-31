@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <permission
+        android:name="com.example.permission.ORDERED"
+        android:protectionLevel="normal" />
+    <uses-permission android:name="com.example.permission.ORDERED" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:resizeableActivity="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.BroadcastTest">
+
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".BootCompleteReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <!--        静态注册 start-->
+        <receiver
+            android:name=".MyBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <!--                <action android:name="com.example.broadcasttest.MY_BROADCAST" />-->
+                <action android:name="com.example.MY_GLOBAL_BROADCAST" />
+            </intent-filter>
+        </receiver>
+        <!--        静态注册 end-->
+
+
+        <!--        有序广播 start-->
+        <receiver
+            android:name=".HighPriorityReceiver"
+            android:exported="false">
+            <intent-filter android:priority="1000">
+                <action android:name="com.example.ORDERED_TEST" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".MediumPriorityReceiver"
+            android:exported="false">
+            <intent-filter android:priority="500">
+                <action android:name="com.example.ORDERED_TEST" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".LowPriorityReceiver"
+            android:exported="false">
+            <intent-filter android:priority="0">
+                <action android:name="com.example.ORDERED_TEST" />
+            </intent-filter>
+        </receiver>
+
+        <!--        有序广播 end-->
+    </application>
+
+</manifest>
